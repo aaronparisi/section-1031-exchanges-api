@@ -1,0 +1,36 @@
+# == Schema Information
+#
+# Table name: exchanges
+#
+#  id                 :bigint           not null, primary key
+#  deadline_180       :date
+#  deadline_45        :date
+#  exchangorable_type :string           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  coordinator_id     :bigint           not null
+#  exchangorable_id   :bigint           not null
+#
+# Indexes
+#
+#  index_exchanges_on_coordinator_id  (coordinator_id)
+#  index_exchanges_on_exchangorable   (exchangorable_type,exchangorable_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (coordinator_id => people.id)
+#
+
+one:
+  coordinator: one
+  exchangorable: one
+  exchangorable_type: Exchangorable
+  deadline_45: 2021-04-14
+  deadline_180: 2021-04-14
+
+two:
+  coordinator: two
+  exchangorable: two
+  exchangorable_type: Exchangorable
+  deadline_45: 2021-04-14
+  deadline_180: 2021-04-14
