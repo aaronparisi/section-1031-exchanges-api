@@ -10,8 +10,8 @@
 #  updated_at :datetime         not null
 #
 class Company < ApplicationRecord
-  has_many :given_employments, as: :employerable
-  has_many :employees, through: :given_employments
+  has_many :employments, as: :employer
+  has_many :employees, through: :employments
 
   has_many :addresses, as: :addressable
   has_many :phone_numbers, as: :callable

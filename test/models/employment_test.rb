@@ -2,17 +2,17 @@
 #
 # Table name: employments
 #
-#  id                :bigint           not null, primary key
-#  employerable_type :string           not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  employee_id       :bigint           not null
-#  employerable_id   :bigint           not null
+#  id            :bigint           not null, primary key
+#  employer_type :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  employee_id   :bigint           not null
+#  employer_id   :bigint           not null
 #
 # Indexes
 #
 #  index_employments_on_employee_id   (employee_id)
-#  index_employments_on_employerable  (employerable_type,employerable_id)
+#  index_employments_on_employerable  (employer_type,employer_id)
 #
 # Foreign Keys
 #

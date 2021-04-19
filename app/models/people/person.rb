@@ -11,12 +11,12 @@
 #  updated_at  :datetime         not null
 #
 class Person < ApplicationRecord
-  has_many :given_employments, as: :employerable
-  has_many :employees, through: :given_employments
+  has_many :employments, as: :employer
+  has_many :employees, through: :employments
 
   has_many :received_employments, class_name: :Employment, foreign_key: :employee_id
-  has_many :company_employers, through: :received_employments, source: :employerable, source_type: :Company
-  has_many :person_employers, through: :received_employments, source: :employerable, source_type: :Person
+  has_many :company_employers, through: :received_employments, source: :employer, source_type: :Company
+  has_many :person_employers, through: :received_employments, source: :employer, source_type: :Person
 
   has_many :addresses, as: :addressable
   has_many :phone_numbers, as: :callable

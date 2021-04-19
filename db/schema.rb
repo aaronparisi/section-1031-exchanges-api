@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_193514) do
+ActiveRecord::Schema.define(version: 2021_04_19_231859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,13 +65,13 @@ ActiveRecord::Schema.define(version: 2021_04_19_193514) do
   end
 
   create_table "employments", force: :cascade do |t|
-    t.string "employerable_type", null: false
-    t.bigint "employerable_id", null: false
+    t.string "employer_type", null: false
+    t.bigint "employer_id", null: false
     t.bigint "employee_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["employee_id"], name: "index_employments_on_employee_id"
-    t.index ["employerable_type", "employerable_id"], name: "index_employments_on_employerable"
+    t.index ["employer_type", "employer_id"], name: "index_employments_on_employerable"
   end
 
   create_table "exchange_contacts", force: :cascade do |t|
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(version: 2021_04_19_193514) do
     t.string "exchange_type", null: false
     t.index ["coordinator_id"], name: "index_exchanges_on_coordinator_id"
     t.index ["exchangorable_type", "exchangorable_id"], name: "index_exchanges_on_exchangorable"
-    t.check_constraint "(exchange_status)::text = ANY ((ARRAY['contacted'::character varying, 'open'::character varying, 'cancelled'::character varying, 'hold'::character varying, 'closed'::character varying])::text[])", name: "exchange_status_check"
-    t.check_constraint "(exchange_type)::text = ANY ((ARRAY['forward'::character varying, 'reverse'::character varying, 'improvementForward'::character varying, 'improvementReverse'::character varying])::text[])", name: "exchange_type_check"
+    t.check_constraint "(exchange_status)::text = ANY (ARRAY[('contacted'::character varying)::text, ('open'::character varying)::text, ('cancelled'::character varying)::text, ('hold'::character varying)::text, ('closed'::character varying)::text])", name: "exchange_status_check"
+    t.check_constraint "(exchange_type)::text = ANY (ARRAY[('forward'::character varying)::text, ('reverse'::character varying)::text, ('improvementForward'::character varying)::text, ('improvementReverse'::character varying)::text])", name: "exchange_type_check"
   end
 
   create_table "faxes", force: :cascade do |t|
