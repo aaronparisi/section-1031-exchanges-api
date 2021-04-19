@@ -5,6 +5,8 @@
 #  id                 :bigint           not null, primary key
 #  deadline_180       :date
 #  deadline_45        :date
+#  exchange_status    :string           not null
+#  exchange_type      :string           not null
 #  exchangorable_type :string           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null

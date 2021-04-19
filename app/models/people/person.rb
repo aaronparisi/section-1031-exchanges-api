@@ -22,8 +22,10 @@ class Person < ApplicationRecord
   has_many :phone_numbers, as: :callable
   has_many :email_addresses, as: :emailable
 
-  has_many :exchanges, as: :exchangorable
+  has_many :exchanges_as_exchangor, as: :exchangorable
   has_many :owned_properties, as: :ownerable
+
+  has_many :exchanges_as_contact, class_name: :ExchangeContact, foreign_key: :contact_id
 
   def employers
     return self.company_employers + self.person_employers

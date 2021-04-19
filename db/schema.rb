@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_013554) do
+ActiveRecord::Schema.define(version: 2021_04_19_193514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,9 @@ ActiveRecord::Schema.define(version: 2021_04_16_013554) do
     t.bigint "bank_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "exchange_id"
     t.index ["bank_id"], name: "index_bank_accounts_on_bank_id"
+    t.index ["exchange_id"], name: "index_bank_accounts_on_exchange_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -72,6 +74,17 @@ ActiveRecord::Schema.define(version: 2021_04_16_013554) do
     t.index ["employerable_type", "employerable_id"], name: "index_employments_on_employerable"
   end
 
+  create_table "exchange_contacts", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.bigint "exchange_id", null: false
+    t.boolean "main_contact"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_id"], name: "index_exchange_contacts_on_contact_id"
+    t.index ["exchange_id"], name: "index_exchange_contacts_on_exchange_id"
+    t.index ["main_contact", "exchange_id"], name: "index_exchange_contacts_on_main_contact_and_exchange_id", unique: true
+  end
+
   create_table "exchanges", force: :cascade do |t|
     t.bigint "coordinator_id", null: false
     t.string "exchangorable_type", null: false
@@ -80,8 +93,12 @@ ActiveRecord::Schema.define(version: 2021_04_16_013554) do
     t.date "deadline_180"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "exchange_status", null: false
+    t.string "exchange_type", null: false
     t.index ["coordinator_id"], name: "index_exchanges_on_coordinator_id"
     t.index ["exchangorable_type", "exchangorable_id"], name: "index_exchanges_on_exchangorable"
+    t.check_constraint "(exchange_status)::text = ANY ((ARRAY['contacted'::character varying, 'open'::character varying, 'cancelled'::character varying, 'hold'::character varying, 'closed'::character varying])::text[])", name: "exchange_status_check"
+    t.check_constraint "(exchange_type)::text = ANY ((ARRAY['forward'::character varying, 'reverse'::character varying, 'improvementForward'::character varying, 'improvementReverse'::character varying])::text[])", name: "exchange_type_check"
   end
 
   create_table "faxes", force: :cascade do |t|
@@ -131,8 +148,11 @@ ActiveRecord::Schema.define(version: 2021_04_16_013554) do
   end
 
   add_foreign_key "bank_accounts", "companies", column: "bank_id"
+  add_foreign_key "bank_accounts", "exchanges"
   add_foreign_key "documents", "transactions"
   add_foreign_key "employments", "people", column: "employee_id"
+  add_foreign_key "exchange_contacts", "exchanges"
+  add_foreign_key "exchange_contacts", "people", column: "contact_id"
   add_foreign_key "exchanges", "people", column: "coordinator_id"
   add_foreign_key "properties", "transactions"
   add_foreign_key "transactions", "exchanges"
