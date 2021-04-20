@@ -1,0 +1,5 @@
+todos
+- routes
+- controllers
+- frontend auth
+- basic info transfer to front end

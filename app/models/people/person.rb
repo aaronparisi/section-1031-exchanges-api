@@ -2,15 +2,18 @@
 #
 # Table name: people
 #
-#  id          :bigint           not null, primary key
-#  first_name  :string
-#  last_name   :string
-#  middle_name :string
-#  type        :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id              :bigint           not null, primary key
+#  first_name      :string
+#  last_name       :string
+#  middle_name     :string
+#  password_digest :string
+#  type            :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 class Person < ApplicationRecord
+  has_secure_password validations: false
+  
   has_many :employments, as: :employer
   has_many :employees, through: :employments
 
