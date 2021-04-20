@@ -17,8 +17,8 @@ class Company < ApplicationRecord
   has_many :phone_numbers, as: :callable
   has_many :email_addresses, as: :emailable
 
-  has_many :exchanges, as: :exchangorable
+  has_many :exchanges, as: :exchangorable, -> { where type: "Facilitator"}
   has_many :owned_properties, as: :ownerable
 
-  has_many :managed_exchanges, through: :employees, source: :exchanges_as_coordinator
+  has_many :managed_exchanges, through: :employees, source: :exchanges_as_coordinator, -> { where type: "Facilitator" }
 end
