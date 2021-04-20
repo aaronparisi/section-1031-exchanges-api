@@ -26,6 +26,7 @@ class Person < ApplicationRecord
   has_many :owned_properties, as: :ownerable
 
   has_many :exchanges_as_contact, class_name: :ExchangeContact, foreign_key: :contact_id
+  has_many :exchanges_as_coordinator, class_name: :Exchange, foreign_key: :coordinator_id
 
   def employers
     return self.company_employers + self.person_employers

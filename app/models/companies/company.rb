@@ -19,4 +19,6 @@ class Company < ApplicationRecord
 
   has_many :exchanges, as: :exchangorable
   has_many :owned_properties, as: :ownerable
+
+  has_many :managed_exchanges, through: :employees, source: :exchanges_as_coordinator
 end

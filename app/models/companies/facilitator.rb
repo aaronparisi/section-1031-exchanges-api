@@ -10,4 +10,5 @@
 #  updated_at :datetime         not null
 #
 class Facilitator < Company
+  has_many :exchanges, through: :employees
 end
