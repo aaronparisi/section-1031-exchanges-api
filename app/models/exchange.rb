@@ -28,4 +28,7 @@ class Exchange < ApplicationRecord
 
   has_many :transactions, class_name: :Transactions, foreign_key: :exchange_id
   has_many :exchange_contacts, class_name: :ExchangeContact, foreign_key: :exchange_id
+
+  has_many :bank_accounts, class_name: :BankAccount, foreign_key: :exchange_id
+  has_many :banks, through: :bank_accounts
 end
